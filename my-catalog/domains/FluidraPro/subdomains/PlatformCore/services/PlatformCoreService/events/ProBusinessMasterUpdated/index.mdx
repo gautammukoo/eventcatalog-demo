@@ -1,0 +1,122 @@
+---
+id: ProBusinessMasterUpdated
+name: Pro Business Master Updated
+version: 1.0.0
+summary: |
+  Pro Business Master Updated
+owners:
+  - full-stack
+channels:
+  - id: fluidrapro_platformcore.{env}.events
+badges:
+  - content: Recently updated!
+    backgroundColor: green
+    textColor: green
+  - content: Channel:Event Bridge
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: "schema.avro"
+---
+
+import Footer from "@catalog/components/footer.astro";
+
+## Overview
+
+The `Pro Business Master Updated` event is triggered whenever there is a dealer Onboarded.
+
+<Tiles>
+  <Tile
+    icon="UserGroupIcon"
+    href="/docs/teams/full-stack"
+    title="Contact the team"
+    description="Any questions? Feel free to contact the owners"
+  />
+  <Tile
+    icon="DocumentIcon"
+    href={`/generated/events/ProBusinessMasterUpdated/${frontmatter.id}/schema.avro`}
+    title="View the schema"
+    description="View the schema directly in your browser"
+  />
+</Tiles>
+
+## Architecture diagram
+
+<NodeGraph />
+
+<SchemaViewer file="schema.json" title="JSON Schema" maxHeight="500" />
+
+## Payload example
+
+Event example you my see being published.
+
+```json title="Payload example"
+{
+  "Name": "John Doe",
+  "Age": 30,
+  "Department": "Engineering",
+  "Position": "Software Engineer",
+  "Salary": 85000.5,
+  "JoinDate": "2024-01-15"
+}
+```
+
+## Schema (avro)
+
+<Schema file="schema.avro" title="Pro Busines Master Updated Schema (avro)" />
+
+## Producing the Event
+
+To produce an Pro Business Master Updated event, use the following example Event Bridge producer configuration in Typescript:
+
+```typescript title="Produce event in Typescript" frame="terminal"
+from kafka import KafkaProducer
+import json
+from datetime import datetime
+
+# Kafka configuration
+producer = KafkaProducer(
+    bootstrap_servers=['localhost:9092'],
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
+
+# Event data
+event_data = {
+  "event_id": "abc123",
+  "timestamp": datetime.utcnow().isoformat() + 'Z',
+  "product_id": "prod987",
+  "adjusted_quantity": 10,
+  "new_quantity": 150,
+  "adjustment_reason": "restock",
+  "adjusted_by": "user123"
+}
+
+# Send event to Kafka topic
+producer.send('inventory.adjusted', event_data)
+producer.flush()
+```
+
+### Consuming the Event
+
+To consume an Pro Business Master Updated event, use the following example Event Bridge consumer configuration in Typescript:
+
+```typescript title="Consuming the event with Typescript" frame="terminal"
+from kafka import KafkaConsumer
+import json
+
+# Kafka configuration
+consumer = KafkaConsumer(
+    'inventory.adjusted',
+    bootstrap_servers=['localhost:9092'],
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='inventory_group',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
+
+# Consume events
+for message in consumer:
+    event_data = json.loads(message.value)
+    print(f"Received Inventory Adjusted event: {event_data}")
+```
+
+<Footer />

@@ -1,0 +1,75 @@
+---
+id: Reporting
+name: Reporting
+version: 1.0.0
+owners:
+  - full-stack
+services:
+  - id: ReportingService
+    version: 1.0.0
+badges:
+  - content: Subdomain
+    backgroundColor: blue
+    textColor: blue
+    icon: RectangleGroupIcon
+
+resourceGroups:
+  - id: related-resources
+    title: Core resources
+    items:
+      - id: ReportingService
+        type: service
+---
+
+import Footer from "@catalog/components/footer.astro";
+
+:::warning
+
+Please ensure all services are **updated** to the latest version for compatibility and performance improvements.
+:::
+
+The Reporting sub-domain
+
+<Tiles>
+  <Tile
+    icon="UserGroupIcon"
+    href="/docs/teams/full-stack"
+    title="Contact the team"
+    description="Any questions? Feel free to contact the owners"
+  />
+  <Tile
+    icon="RectangleGroupIcon"
+    href={`/visualiser/domains/${frontmatter.id}/${frontmatter.version}`}
+    title={`${frontmatter.services.length} services`}
+    description="This domain contains the following services."
+  />
+</Tiles>
+
+### Architecture for the Reporting sub-domain
+
+<NodeGraph />
+
+<MessageTable
+  format="all"
+  limit={4}
+  showChannels={true}
+  title="Messages in/out of the sub-domain"
+/>
+
+### Reporting example (sequence diagram)
+
+TBD
+
+## Flows
+
+TBD
+
+<ResourceGroupTable
+  id="related-resources"
+  limit={4}
+  showOwners={true}
+  title="Core resources for the Reporting sub-domain"
+  description="Resources that are related to the Reporting sub-domain, you may find them useful"
+/>
+
+<Footer />
